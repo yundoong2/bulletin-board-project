@@ -1,10 +1,11 @@
 package study.bulletinboard.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import study.bulletinboard.dto.BoardDTO;
+import study.bulletinboard.controller.dto.BoardInput;
+import study.bulletinboard.services.dto.BoardDto;
 import study.bulletinboard.services.BoardService;
 
 import java.util.List;
@@ -19,42 +20,42 @@ import java.util.List;
 </pre>
  **/
 @Slf4j
-@Controller
+@RestController
+@RequiredArgsConstructor
 public class BoardController {
-    @Autowired
-    private BoardService boardService;
+    private final BoardService boardService;
 
     /**
      * addPost 설명
      *
-     <pre>
      * 게시글 등록
-     * @param
-     * @return url {@link String}
+     * @param input {@link BoardInput}
+     * @return BoardDto {@link BoardDto}
      * @throw
      * @author cyh68
      * @since 2023-02-08
-    </pre>
      **/
-    @PostMapping(value = {})
-    public String addPost(@RequestBody BoardDTO request){
-        return "redirect:/board/list";
+    @PostMapping(value = "/board/list")
+    public BoardDto addPost(@RequestBody BoardInput input){
+        BoardDto dto = boardService.addBoardPost(input);
+
+        return dto;
     }
 
     /**
      * getList 설명
      *
-     <pre>
      * 게시글 전체 조회
-     * @return BoardDTO List {@link List<BoardDTO//>}
+     * @return BoardDto List
      * @throw
      * @author cyh68
      * @since 2023-02-08
-     </pre>
      **/
     @GetMapping(value = {"/", "/list", "/board/list"})
-    public String getAllPosts(){
-        return "/board/list";
+    public List<BoardDto> getAllPosts(){
+        List<BoardDto> boardList = boardService.getBoardList();
+
+        return boardList;
     }
 
     /**
@@ -63,15 +64,17 @@ public class BoardController {
      <pre>
      * 특정 게시글 조회
      * @param id {@link Long}
-     * @return BoardDTO {@link BoardDTO}
+     * @return BoardDTO {@link BoardDto}
      * @throw 
      * @author cyh68
      * @since 2023-02-08
      </pre>
      **/
     @GetMapping(value = "/board/list/{id}")
-    public String getPost(@PathVariable Long id){
-        return "/board/detail";
+    public BoardDto getPost(@PathVariable Long id){
+        BoardDto dto = boardService.getBoardPost(id);
+
+        return dto;
     }
 
     /**
@@ -80,15 +83,15 @@ public class BoardController {
      <pre>
      * 특정 게시물 내용 전체 수정
      * @param id {@link Long}
-     * @param request {@link BoardDTO}
-     * @return BoardDTO {@link BoardDTO}
+     * @param request {@link BoardDto}
+     * @return BoardDTO {@link BoardDto}
      * @throw
      * @author cyh68
      * @since 2023-02-08
      </pre>
      **/
     @PutMapping(value = "/board/list/{id}")
-    public String editAllOfPost(@PathVariable Long id, @RequestBody BoardDTO request){
+    public String editAllOfPost(@PathVariable Long id, @RequestBody BoardDto request){
         return "redirect:/board/list";
     }
 
@@ -98,15 +101,15 @@ public class BoardController {
      <pre>
      * 특정 게시물 내용 부분 수정
      *  @param id {@link Long}
-     *  @param request {@link BoardDTO}
-     * @return BoardDTO {@link BoardDTO}
+     *  @param request {@link BoardDto}
+     * @return BoardDTO {@link BoardDto}
      * @throw 
      * @author cyh68
      * @since 2023-02-08
      </pre>
      **/
     @PatchMapping(value = "/board/list/{id}")
-    public String editPartOfPost(@PathVariable Long id, @RequestBody BoardDTO request){
+    public String editPartOfPost(@PathVariable Long id, @RequestBody BoardDto request){
         return "redirect:/board/list";
     }
 
