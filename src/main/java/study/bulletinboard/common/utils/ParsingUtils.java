@@ -9,7 +9,7 @@ public class ParsingUtils {
      * toEntity 설명
      *
      * DTO에서 Entity 변환
-     * @param boardDto {@link BoardDto}
+     * @param input {@link BoardInput}
      * @return BoardEntity {@link BoardEntity}
      * @throw 
      * @author cyh68
