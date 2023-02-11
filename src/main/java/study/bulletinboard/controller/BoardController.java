@@ -3,6 +3,9 @@ package study.bulletinboard.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import study.bulletinboard.controller.dto.BoardInput;
 import study.bulletinboard.services.dto.BoardDto;
@@ -64,7 +67,7 @@ public class BoardController {
      <pre>
      * 특정 게시글 조회
      * @param id {@link Long}
-     * @return BoardDTO {@link BoardDto}
+     * @return BoardDto {@link BoardDto}
      * @throw 
      * @author cyh68
      * @since 2023-02-08
@@ -83,16 +86,18 @@ public class BoardController {
      <pre>
      * 특정 게시물 내용 전체 수정
      * @param id {@link Long}
-     * @param request {@link BoardDto}
-     * @return BoardDTO {@link BoardDto}
+     * @param input {@link BoardInput}
+     * @return BoardDto {@link BoardDto}
      * @throw
      * @author cyh68
      * @since 2023-02-08
      </pre>
      **/
     @PutMapping(value = "/board/list/{id}")
-    public String editAllOfPost(@PathVariable Long id, @RequestBody BoardDto request){
-        return "redirect:/board/list";
+    public BoardDto editAllOfPost(@PathVariable Long id, @RequestBody BoardInput input){
+        BoardDto dto = boardService.updatePostPut(id, input);
+
+        return dto;
     }
 
     /**
@@ -101,16 +106,18 @@ public class BoardController {
      <pre>
      * 특정 게시물 내용 부분 수정
      *  @param id {@link Long}
-     *  @param request {@link BoardDto}
-     * @return BoardDTO {@link BoardDto}
+     *  @param input {@link BoardInput}
+     * @return BoardDto {@link BoardDto}
      * @throw 
      * @author cyh68
      * @since 2023-02-08
      </pre>
      **/
     @PatchMapping(value = "/board/list/{id}")
-    public String editPartOfPost(@PathVariable Long id, @RequestBody BoardDto request){
-        return "redirect:/board/list";
+    public BoardDto editPartOfPost(@PathVariable Long id, @RequestBody BoardInput input){
+        BoardDto dto = boardService.updatePostPatch(id, input);
+
+        return dto;
     }
 
     /**
@@ -119,15 +126,16 @@ public class BoardController {
      <pre>
      * 특정 게시물 삭제
      * @param id {@link Long}
-     * @return 
+     * @return ResponseEntity HttpStatus
      * @throw 
      * @author cyh68
      * @since 2023-02-08
      </pre>
      **/
     @DeleteMapping(value = "/board/list/{id}")
-    public String deletePost(@PathVariable Long id){
-        return "redirect:/board/list";
+    public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id){
+
+        return boardService.deletePost(id);
     }
 
     
