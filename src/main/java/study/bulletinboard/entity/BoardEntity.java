@@ -1,9 +1,6 @@
 package study.bulletinboard.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "BOARD") //MySQL 8.x 기준으로 해당 버전 이상부터는 테이블 명을 무조건 대문자로 해야함
@@ -36,12 +34,4 @@ public class BoardEntity {
     private LocalDateTime regDate = LocalDateTime.now();
     @Column(name = "HIT")
     private Long hit;
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 }
