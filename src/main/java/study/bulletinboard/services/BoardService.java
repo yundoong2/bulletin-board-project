@@ -2,6 +2,7 @@ package study.bulletinboard.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,15 +13,16 @@ import study.bulletinboard.services.dto.BoardDto;
 import study.bulletinboard.repository.BoardRepository;
 import study.bulletinboard.common.utils.ParsingUtils;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class BoardService {
     private final BoardRepository repository;
 
@@ -56,6 +58,7 @@ public class BoardService {
      * @since 2023-02-10
      * </pre>
      **/
+    @Transactional
     public BoardDto addBoardPost(BoardInput input) {
         //게시글 등록 시 초기 조회수 0으로 설정
         input.setHit(0L);
@@ -76,7 +79,8 @@ public class BoardService {
      * </pre>
      **/
     public BoardDto getBoardPost(Long id) {
-        BoardDto dto = ParsingUtils.toDto(repository.findById(id).get());
+        BoardDto dto = ParsingUtils.toDto(repository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException()));
 
         return dto;
     }
@@ -94,6 +98,7 @@ public class BoardService {
      * @since 2023-02-11
      * </pre>
      **/
+    @Transactional
     public BoardDto updatePostPut(Long id, BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
@@ -127,6 +132,7 @@ public class BoardService {
      * @since 2023-02-11
      * </pre>
      **/
+    @Transactional
     public BoardDto updatePostPatch(Long id, BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
@@ -156,6 +162,7 @@ public class BoardService {
      * @since 2023-02-11
      * </pre>
      **/
+    @Transactional
     public ResponseEntity<HttpStatus> deletePost(Long id) {
         ResponseEntity<HttpStatus> response;
 

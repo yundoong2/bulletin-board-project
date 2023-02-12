@@ -40,9 +40,8 @@ public class BoardController {
      **/
     @PostMapping(value = "/board/list")
     public BoardDto addPost(@RequestBody BoardInput input){
-        BoardDto dto = boardService.addBoardPost(input);
 
-        return dto;
+        return boardService.addBoardPost(input);
     }
 
     /**
@@ -56,9 +55,8 @@ public class BoardController {
      **/
     @GetMapping(value = {"/", "/list", "/board/list"})
     public List<BoardDto> getAllPosts(){
-        List<BoardDto> boardList = boardService.getBoardList();
 
-        return boardList;
+        return boardService.getBoardList();
     }
 
     /**
@@ -75,9 +73,8 @@ public class BoardController {
      **/
     @GetMapping(value = "/board/list/{id}")
     public BoardDto getPost(@PathVariable Long id){
-        BoardDto dto = boardService.getBoardPost(id);
 
-        return dto;
+        return boardService.getBoardPost(id);
     }
 
     /**
@@ -95,9 +92,8 @@ public class BoardController {
      **/
     @PutMapping(value = "/board/list/{id}")
     public BoardDto editAllOfPost(@PathVariable Long id, @RequestBody BoardInput input){
-        BoardDto dto = boardService.updatePostPut(id, input);
 
-        return dto;
+        return boardService.updatePostPut(id, input);
     }
 
     /**
@@ -115,9 +111,8 @@ public class BoardController {
      **/
     @PatchMapping(value = "/board/list/{id}")
     public BoardDto editPartOfPost(@PathVariable Long id, @RequestBody BoardInput input){
-        BoardDto dto = boardService.updatePostPatch(id, input);
 
-        return dto;
+        return boardService.updatePostPatch(id, input);
     }
 
     /**
