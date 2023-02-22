@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import study.bulletinboard.controller.dto.BaseResponse;
 import study.bulletinboard.controller.dto.BoardInput;
 import study.bulletinboard.services.dto.BoardDto;
 import study.bulletinboard.services.BoardService;
@@ -39,9 +40,9 @@ public class BoardController {
      * @since 2023-02-08
      **/
     @PostMapping(value = "/board/list")
-    public BoardDto addPost(@RequestBody BoardInput input){
-
-        return boardService.addBoardPost(input);
+    public BaseResponse addPost(@RequestBody BoardInput input){
+        BoardDto result = boardService.addBoardPost(input);
+        return new BaseResponse().success(result);
     }
 
     /**
@@ -54,9 +55,9 @@ public class BoardController {
      * @since 2023-02-08
      **/
     @GetMapping(value = {"/", "/list", "/board/list"})
-    public List<BoardDto> getAllPosts(){
-
-        return boardService.getBoardList();
+    public BaseResponse getAllPosts(){
+        List<BoardDto> result = boardService.getBoardList();
+        return new BaseResponse().success(result);
     }
 
     /**
@@ -72,9 +73,9 @@ public class BoardController {
      </pre>
      **/
     @GetMapping(value = "/board/list/{id}")
-    public BoardDto getPost(@PathVariable Long id){
-
-        return boardService.getBoardPost(id);
+    public BaseResponse getPost(@PathVariable Long id){
+        BoardDto result = boardService.getBoardPost(id);
+        return new BaseResponse().success(result);
     }
 
     /**
@@ -91,9 +92,10 @@ public class BoardController {
      </pre>
      **/
     @PutMapping(value = "/board/list/{id}")
-    public BoardDto editAllOfPost(@PathVariable Long id, @RequestBody BoardInput input){
+    public BaseResponse editAllOfPost(@PathVariable Long id, @RequestBody BoardInput input){
+        BoardDto result = boardService.updatePostPut(id, input);
 
-        return boardService.updatePostPut(id, input);
+        return new BaseResponse().success(result);
     }
 
     /**
@@ -110,9 +112,10 @@ public class BoardController {
      </pre>
      **/
     @PatchMapping(value = "/board/list/{id}")
-    public BoardDto editPartOfPost(@PathVariable Long id, @RequestBody BoardInput input){
+    public BaseResponse editPartOfPost(@PathVariable Long id, @RequestBody BoardInput input){
+        BoardDto result = boardService.updatePostPatch(id, input);
 
-        return boardService.updatePostPatch(id, input);
+        return new BaseResponse().success(result);
     }
 
     /**
@@ -128,9 +131,10 @@ public class BoardController {
      </pre>
      **/
     @DeleteMapping(value = "/board/list/{id}")
-    public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id){
+    public BaseResponse deletePost(@PathVariable Long id){
+        ResponseEntity<HttpStatus> result = boardService.deletePost(id);
 
-        return boardService.deletePost(id);
+        return new BaseResponse().success(result);
     }
 
     
