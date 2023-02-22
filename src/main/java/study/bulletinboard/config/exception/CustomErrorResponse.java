@@ -10,5 +10,6 @@ import study.bulletinboard.common.constants.CustomErrorCode;
 @Builder
 public class CustomErrorResponse {
     private CustomErrorCode status;
+    private String code;
     private String statusMessage;
 }

@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -17,6 +18,8 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import study.bulletinboard.BulletinBoardApplication;
+import study.bulletinboard.BulletinBoardApplicationTests;
+import study.bulletinboard.common.CommCode;
 import study.bulletinboard.common.Constants;
 import study.bulletinboard.common.utils.ParsingUtils;
 import study.bulletinboard.controller.dto.BoardInput;
@@ -25,7 +28,9 @@ import study.bulletinboard.repository.BoardRepository;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest(classes = BulletinBoardApplication.class)
+@SpringBootTest(classes = BulletinBoardApplicationTests.class)
+@ActiveProfiles("test")
+
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 public class ControllerTest {
@@ -44,8 +49,12 @@ public class ControllerTest {
     @BeforeEach
     public void beforeEach() {
         BoardInput input = new BoardInput();
-        input.setTitle(Constants.TEST_TITLE.getInput());
-        input.setContent(Constants.TEST_CONTENT.getInput());
+
+//        input.setTitle(Constants.TEST_TITLE.getInput());
+        input.setTitle(CommCode.TEST_TITLE);
+//        input.setContent(Constants.TEST_CONTENT.getInput());
+        input.setContent(CommCode.Constants.TEST_CONTENT.getInput());
+
         input.setWriter(Constants.TEST_WRITER.getInput());
         input.setHit(Long.valueOf(Constants.TEST_HIT.getInput()));
 
@@ -68,7 +77,7 @@ public class ControllerTest {
 
         //When
         MockHttpServletRequestBuilder builder1 = MockMvcRequestBuilders
-                .get(Constants.BASE_URI.getInput())
+                .get("/board/list")
                 .headers(headers);
 
         //Then
@@ -95,7 +104,7 @@ public class ControllerTest {
         headers.set("Content-Type", "application/json");
 
         UriComponents uriComponents = UriComponentsBuilder
-                .fromPath(Constants.BASE_URI.getInput() +"/" + id)
+                .fromPath("/board/list/" + id)
                 .build(false);
 
         //When
