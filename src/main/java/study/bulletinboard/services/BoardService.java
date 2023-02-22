@@ -108,13 +108,15 @@ public class BoardService {
             BoardEntity boardEntity = board.get();
             boardEntity.setTitle(input.getTitle());
             boardEntity.setContent(input.getContent());
+            boardEntity.setWriter(input.getWriter());
+            boardEntity.setHit(input.getHit());
 
             dto = ParsingUtils.toDto(repository.save(boardEntity));
         }
-//        else {
-//            //존재하지 않으면 해당 리소스에 새로 추가
-//            dto = ParsingUtils.toDto(repository.save(ParsingUtils.toEntity(input)));
-//        }
+        else {
+            //존재하지 않으면 해당 새로 추가
+            dto = ParsingUtils.toDto(repository.save(ParsingUtils.toEntity(input)));
+        }
         return dto;
     }
 
