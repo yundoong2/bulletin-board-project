@@ -15,6 +15,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import study.bulletinboard.BulletinBoardApplication;
 import study.bulletinboard.common.Constants;
+import study.bulletinboard.common.constants.CustomErrorCode;
 import study.bulletinboard.common.utils.ParsingUtils;
 import study.bulletinboard.controller.dto.BoardInput;
 import study.bulletinboard.repository.BoardRepository;
@@ -76,6 +77,7 @@ public class ControllerFailTest {
         resultActions = mockMvc.perform(builder1);
         resultActions.andDo(print());
         resultActions.andExpect(status().is4xxClientError());
-        resultActions.andExpect(jsonPath("$.message").value("Success"));
+        resultActions.andExpect(jsonPath("$.code").value(CustomErrorCode.BAD_REQUEST_ERROR.getCode()));
+        resultActions.andExpect(jsonPath("$.message").value(CustomErrorCode.BAD_REQUEST_ERROR.getMessage()));
     }
 }

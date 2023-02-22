@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.bulletinboard.controller.dto.BaseResponse;
 import study.bulletinboard.controller.dto.BoardInput;
@@ -73,7 +74,7 @@ public class BoardController {
      </pre>
      **/
     @GetMapping(value = "/board/list/{id}")
-    public BaseResponse getPost(@PathVariable Long id){
+    public BaseResponse getPost(@PathVariable Long id) throws Exception{
         BoardDto result = boardService.getBoardPost(id);
         return new BaseResponse().success(result);
     }
@@ -112,7 +113,7 @@ public class BoardController {
      </pre>
      **/
     @PatchMapping(value = "/board/list/{id}")
-    public BaseResponse editPartOfPost(@PathVariable Long id, @RequestBody BoardInput input){
+    public BaseResponse editPartOfPost(@PathVariable Long id, @RequestBody @Validated BoardInput input){
         BoardDto result = boardService.updatePostPatch(id, input);
 
         return new BaseResponse().success(result);

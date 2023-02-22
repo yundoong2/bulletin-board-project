@@ -2,6 +2,7 @@ package study.bulletinboard.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  </pre>
  **/
 public class BoardInput {
+    @NotNull
     private Long id;
     private String title;
     private String content;
