@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.bulletinboard.controller.dto.BaseResponse;
 import study.bulletinboard.controller.dto.BoardInput;
 import study.bulletinboard.services.dto.BoardDto;
 import study.bulletinboard.services.BoardService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -40,7 +42,7 @@ public class BoardController {
      * @since 2023-02-08
      **/
     @PostMapping(value = "/board/list")
-    public BaseResponse addPost(@RequestBody BoardInput input){
+    public BaseResponse addPost(@RequestBody @Valid BoardInput input){
         BoardDto result = boardService.addBoardPost(input);
         return new BaseResponse().success(result);
     }

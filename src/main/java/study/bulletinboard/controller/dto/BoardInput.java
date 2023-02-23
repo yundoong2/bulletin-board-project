@@ -1,10 +1,12 @@
 package study.bulletinboard.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import net.bytebuddy.implementation.bind.annotation.Empty;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,8 +22,11 @@ import java.time.LocalDateTime;
  **/
 public class BoardInput {
     private Long id;
+    @NotNull @NotBlank
     private String title;
+    @NotNull @NotBlank
     private String content;
+    @NotNull @NotBlank
     private String writer;
     @JsonProperty("reg_date")
     private LocalDateTime regDate;

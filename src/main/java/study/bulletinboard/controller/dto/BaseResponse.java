@@ -11,11 +11,17 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class BaseResponse implements Serializable {
+    private String code;
     private String message;
     private Object data;
 
     public BaseResponse() {
         this.setMessage("Success");
+    }
+
+    public BaseResponse(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     public BaseResponse success(Object data) {
