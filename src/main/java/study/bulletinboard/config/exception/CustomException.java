@@ -5,13 +5,14 @@ import study.bulletinboard.common.constants.CustomErrorCode;
 
 public class CustomException extends RuntimeException {
     @Getter
-    private CustomErrorCode customErrorCode;
+    private String code;
     @Getter
-    private String errorMessage;
+    private String message;
+
 
     public CustomException(CustomErrorCode customErrorCode) {
         super(customErrorCode.getMessage());
-        this.customErrorCode = customErrorCode;
-        this.errorMessage = customErrorCode.getMessage();
+        this.code = customErrorCode.getCode();
+        this.message = customErrorCode.getMessage();
     }
 }

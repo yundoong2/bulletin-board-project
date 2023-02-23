@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import study.bulletinboard.config.exception.BadRequestException;
 import study.bulletinboard.controller.dto.BoardInput;
 import study.bulletinboard.entity.BoardEntity;
 import study.bulletinboard.services.dto.BoardDto;
@@ -80,7 +81,7 @@ public class BoardService {
      **/
     public BoardDto getBoardPost(Long id) {
         BoardDto dto = ParsingUtils.toDto(repository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException()));
+                orElseThrow(() -> new BadRequestException()));
 
         return dto;
     }
