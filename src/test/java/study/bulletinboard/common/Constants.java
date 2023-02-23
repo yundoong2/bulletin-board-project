@@ -2,21 +2,17 @@ package study.bulletinboard.common;
 
 import study.bulletinboard.controller.dto.BoardInput;
 
-public enum Constants {
-    BASE_URI("/board/list"),
-    TEST_TITLE("테스트 제목"),
-    TEST_CONTENT("테스트 본문"),
-    TEST_WRITER("테스트 작성자"),
-    TEST_HIT("0"),
-    TEST_FAIL_ID("100");
+public class Constants {
 
-    private final String input;
+    public static final String TEST_TITLE = "테스트 제목";
+    public static final String TEST_CONTENT = "테스트 본문";
+    public static final String TEST_WRITER = "테스트 작성자";
+    public static final Long TEST_HIT = 0L;
+    public static final Long TEST_FAIL_ID = 100L;
 
-    Constants(String input) {
-        this.input = input;
+    //클래스 안에서 enum을 써도 됨  
+    public enum CommonCode {
+        
     }
 
-    public String getInput() {
-        return this.input;
-    }
 }

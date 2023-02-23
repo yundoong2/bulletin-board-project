@@ -9,6 +9,6 @@ import study.bulletinboard.common.constants.CustomErrorCode;
 @NoArgsConstructor
 @Builder
 public class CustomErrorResponse {
-    private CustomErrorCode status;
-    private String statusMessage;
+    private String code;
+    private String message;
 }
