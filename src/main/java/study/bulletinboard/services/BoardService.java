@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
+import study.bulletinboard.common.constants.CustomErrorCode;
 import study.bulletinboard.config.exception.BadRequestException;
+import study.bulletinboard.config.exception.CustomException;
 import study.bulletinboard.controller.dto.BoardInput;
 import study.bulletinboard.entity.BoardEntity;
 import study.bulletinboard.services.dto.BoardDto;
@@ -16,6 +19,7 @@ import study.bulletinboard.common.utils.ParsingUtils;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -24,6 +28,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Validated
 public class BoardService {
     private final BoardRepository repository;
 
@@ -60,7 +65,7 @@ public class BoardService {
      * </pre>
      **/
     @Transactional
-    public BoardDto addBoardPost(BoardInput input) {
+    public BoardDto addBoardPost(@Valid BoardInput input) {
         //게시글 등록 시 초기 조회수 0으로 설정
         input.setHit(0L);
         BoardDto dto = ParsingUtils.toDto(repository.save(ParsingUtils.toEntity(input)));
@@ -100,7 +105,7 @@ public class BoardService {
      * </pre>
      **/
     @Transactional
-    public BoardDto updatePostPut(Long id, BoardInput input) {
+    public BoardDto updatePostPut(Long id, @Valid BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
 
@@ -113,8 +118,7 @@ public class BoardService {
             boardEntity.setHit(input.getHit());
 
             dto = ParsingUtils.toDto(repository.save(boardEntity));
-        }
-        else {
+        } else {
             //존재하지 않으면 해당 새로 추가
             dto = ParsingUtils.toDto(repository.save(ParsingUtils.toEntity(input)));
         }
@@ -136,7 +140,7 @@ public class BoardService {
      * </pre>
      **/
     @Transactional
-    public BoardDto updatePostPatch(Long id, BoardInput input) {
+    public BoardDto updatePostPatch(Long id, @Valid BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
 
@@ -172,8 +176,9 @@ public class BoardService {
         try {
             repository.deleteById(id);
             response = new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch(Exception e) {
+            throw new CustomException(CustomErrorCode.INTERNAL_SERVER_ERROR);
         }
 
         return response;

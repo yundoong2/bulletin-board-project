@@ -28,10 +28,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(classes = BulletinBoardApplicationTests.class)
-@ActiveProfiles("test")
+@ActiveProfiles({"test"})
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.DisplayName.class)
-public class ControllerTest {
+class ControllerTest {
     //    @Autowired
     //    CacheManager cacheManager;
     ResultActions resultActions;
