@@ -25,6 +25,7 @@ public class BaseResponse implements Serializable {
     }
 
     public BaseResponse success(Object data) {
+        this.setCode("0");
         this.setMessage("Success");
         this.setData(data);
         return this;
