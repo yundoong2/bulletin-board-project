@@ -43,7 +43,7 @@ public class BoardController {
      * @since 2023-02-08
      **/
     @PostMapping(value = "/board/list")
-    public BaseResponse addPost(@RequestBody @Valid BoardInput input) {
+    public BaseResponse addPost(@RequestBody @Validated BoardInput input) {
         BoardDto result = boardService.addBoardPost(input);
         return new BaseResponse().success(result);
     }
@@ -96,7 +96,7 @@ public class BoardController {
      * </pre>
      **/
     @PutMapping(value = "/board/list/{id}")
-    public BaseResponse editAllOfPost(@PathVariable Long id, @RequestBody @Valid BoardInput input) {
+    public BaseResponse editAllOfPost(@PathVariable Long id, @RequestBody @Validated BoardInput input) {
         BoardDto result = boardService.updatePostPut(id, input);
 
         return new BaseResponse().success(result);
@@ -116,7 +116,7 @@ public class BoardController {
      * </pre>
      **/
     @PatchMapping(value = "/board/list/{id}")
-    public BaseResponse editPartOfPost(@PathVariable Long id, @RequestBody @Valid BoardInput input) {
+    public BaseResponse editPartOfPost(@PathVariable Long id, @RequestBody @Validated BoardInput input) {
         BoardDto result = boardService.updatePostPatch(id, input);
 
         return new BaseResponse().success(result);

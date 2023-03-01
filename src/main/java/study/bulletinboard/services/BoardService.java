@@ -65,7 +65,7 @@ public class BoardService {
      * </pre>
      **/
     @Transactional
-    public BoardDto addBoardPost(@Valid BoardInput input) {
+    public BoardDto addBoardPost(BoardInput input) {
         //게시글 등록 시 초기 조회수 0으로 설정
         input.setHit(0L);
         BoardDto dto = ParsingUtils.toDto(repository.save(ParsingUtils.toEntity(input)));
@@ -86,7 +86,7 @@ public class BoardService {
      **/
     public BoardDto getBoardPost(Long id) {
         BoardDto dto = ParsingUtils.toDto(repository.findById(id).
-                orElseThrow(() -> new BadRequestException()));
+                orElseThrow(() -> new BadRequestException("해당 Id에 대한 데이터가 존재하지 않습니다.")));
 
         return dto;
     }
@@ -105,7 +105,7 @@ public class BoardService {
      * </pre>
      **/
     @Transactional
-    public BoardDto updatePostPut(Long id, @Valid BoardInput input) {
+    public BoardDto updatePostPut(Long id, BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
 
@@ -140,7 +140,7 @@ public class BoardService {
      * </pre>
      **/
     @Transactional
-    public BoardDto updatePostPatch(Long id, @Valid BoardInput input) {
+    public BoardDto updatePostPatch(Long id, BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
 
