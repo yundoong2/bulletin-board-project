@@ -64,7 +64,6 @@ public class BoardService {
      * @since 2023-02-10
      * </pre>
      **/
-    @Transactional
     public BoardDto addBoardPost(BoardInput input) {
         //게시글 등록 시 초기 조회수 0으로 설정
         input.setHit(0L);
@@ -104,7 +103,6 @@ public class BoardService {
      * @since 2023-02-11
      * </pre>
      **/
-    @Transactional
     public BoardDto updatePostPut(Long id, BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
@@ -139,7 +137,6 @@ public class BoardService {
      * @since 2023-02-11
      * </pre>
      **/
-    @Transactional
     public BoardDto updatePostPatch(Long id, BoardInput input) {
         BoardDto dto = null;
         Optional<BoardEntity> board = repository.findById(id);
@@ -169,7 +166,6 @@ public class BoardService {
      * @since 2023-02-11
      * </pre>
      **/
-    @Transactional
     public ResponseEntity<HttpStatus> deletePost(Long id) {
         ResponseEntity<HttpStatus> response;
 
