@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import study.bulletinboard.config.annotation.CustomAnnotation;
+import study.bulletinboard.config.annotation.TraceAnnotation;
 import study.bulletinboard.controller.dto.BaseResponse;
 import study.bulletinboard.controller.dto.BoardInput;
 import study.bulletinboard.services.dto.BoardDto;
@@ -43,6 +45,8 @@ public class BoardController {
      * @since 2023-02-08
      **/
     @PostMapping(value = "/board/list")
+    @CustomAnnotation
+    @TraceAnnotation
     public BaseResponse addPost(@RequestBody @Validated BoardInput input) {
         BoardDto result = boardService.addBoardPost(input);
         return new BaseResponse().success(result);
@@ -59,6 +63,7 @@ public class BoardController {
      * @since 2023-02-08
      **/
     @GetMapping(value = {"/", "/list", "/board/list"})
+    @TraceAnnotation
     public BaseResponse getAllPosts() {
         List<BoardDto> result = boardService.getBoardList();
         return new BaseResponse().success(result);
@@ -96,6 +101,7 @@ public class BoardController {
      * </pre>
      **/
     @PutMapping(value = "/board/list/{id}")
+    @CustomAnnotation
     public BaseResponse editAllOfPost(@PathVariable Long id, @RequestBody @Validated BoardInput input) {
         BoardDto result = boardService.updatePostPut(id, input);
 
@@ -116,7 +122,7 @@ public class BoardController {
      * </pre>
      **/
     @PatchMapping(value = "/board/list/{id}")
-    public BaseResponse editPartOfPost(@PathVariable Long id, @RequestBody @Validated BoardInput input) {
+    public BaseResponse editPartOfPost(@PathVariable Long id, @RequestBody BoardInput input) {
         BoardDto result = boardService.updatePostPatch(id, input);
 
         return new BaseResponse().success(result);
